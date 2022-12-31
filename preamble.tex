@@ -1,0 +1,209 @@
+% \usepackage[top=30truemm, bottom=30truemm, left=25truemm, right=25truemm]{geometry} % 余白設定
+% \usepackage[dvipdfmx]{pdflscape}
+
+
+\usepackage{url}
+% \usepackage{moreverb}
+
+\usepackage{listings,jvlisting} %ソースコード埋め込み
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+\makeatletter
+\def\lst@lettertrue{\let\lst@ifletter\iffalse}
+\makeatother
+\renewcommand{\lstlistingname}{プログラム}
+
+% ================ Quick Half Quad Text bgn =========================
+\newcommand{\hqq}[1]{\ \mathtt{#1}\ }
+\newcommand{\hqif}{\hqq{if}}
+\newcommand{\hqthen}{\hqq{then}}
+\newcommand{\hqelse}{\hqq{else}}
+\newcommand{\hqwhile}{\hqq{while}}
+\newcommand{\hqdo}{\hqq{do}}
+\newcommand{\hqskip}{\hqq{skip}}
+
+\newcommand{\hqql}[1]{\ \mathtt{#1}}
+\newcommand{\hqlif}{\hqql{if}}
+\newcommand{\hqlthen}{\hqql{then}}
+\newcommand{\hqlelse}{\hqql{else}}
+\newcommand{\hqlwhile}{\hqql{while}}
+\newcommand{\hqldo}{\hqql{do}}
+\newcommand{\hqlskip}{\hqql{skip}}
+
+\newcommand{\hqqr}[1]{\mathtt{#1}\ }
+\newcommand{\hqrif}{\hqqr{if}}
+\newcommand{\hqrthen}{\hqqr{then}}
+\newcommand{\hqrelse}{\hqqr{else}}
+\newcommand{\hqrwhile}{\hqqr{while}}
+\newcommand{\hqrdo}{\hqqr{do}}
+\newcommand{\hqrskip}{\hqqr{skip}}
+
+\newcommand{\nhqq}[1]{\mathtt{#1}}
+\newcommand{\nhqskip}{\nhqq{skip}}
+\newcommand{\x}{\nhqq{x}}
+\newcommand{\y}{\nhqq{y}}
+\newcommand{\z}{\nhqq{z}}
+% ================ Quick Half Quad Text end =========================
+
+\usepackage[dvipdfmx]{graphicx} % グラフを入れるのに必要
+\usepackage[dvipdfmx]{color} % グラフを入れるのに必要
+\usepackage{fancyhdr} % ページ数指定に必要
+\usepackage{lastpage} % 同上
+\usepackage{multirow} % 表で縦複数行にまたがるセルを作るのに必要
+\usepackage{amsmath} % 一部の数学記号や数学的表現をするために必要
+\usepackage{autobreak}
+\usepackage{amsfonts} % 同上
+\usepackage{amssymb} % 同上
+\usepackage{bm} % 太字に必要
+\usepackage{siunitx} % SI単位系の斜体を直す
+\usepackage{here}
+\usepackage{wrapfig}
+\usepackage{breqn} % dmath でいい感じに数式を折り返してくれる
+% \usepackage{pdfpages} % pdf を挿入できる
+% \usepackage{slashbox} % 表に斜め線を入れるやつ このtexファイルがあるディレクトリと同じところにslashbox.styを置くとかする必要がある。
+
+\usepackage{breqn}
+\usepackage{wrapfig}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{bussproofs}
+
+\usepackage{lscape}
+
+% \newcommand{\unit}[1]{\mathrm{[#1]}} % 単位の括弧[]
+\newcommand{\tup}[1]{\left\langle{#1}\right\rangle}
+
+% % タイトルを明朝体で書く
+% % \titleformat* は \titleformat を短く書く方法． 
+\usepackage{titlesec}
+% \titleformat*{\section}{\Large\bfseries}
+% \titleformat*{\section}{\large\bfseries}
+% \titleformat*{\subsection}{\large\bfseries}
+% \titleformat*{\subsection}{\normalsize\bfseries}
+% \titleformat*{\subsubsection}{\normalsize\bfseries}
+
+% ページの右下にページ数を記載するスタイル
+% \fancypagestyle{mypagestyle}{
+%   \lhead{}
+%   \rhead{}
+%   \fancyfoot[C]{}
+%   \fancyfoot[R]{p.\thepage/\pageref{LastPage}}
+%   \renewcommand{\headrulewidth}{0.0pt}
+% }
+
+% ページスタイルを適用
+% \pagestyle{mypagestyle}
+
+% \maketitle コマンドをdocument内に入れることで, タイトルページが自動生成される
+% \title{プログラミング言語特論 \quad 課題1}
+% \author{1W192258-2 \quad 富家功一朗}
+
+% \makeatletter
+%   \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+%   \@addtoreset{subsection}{section}
+% \makeatother
+
+% \renewcommand{\thesection}{\textbf{[\arabic{section}]}}
+% \renewcommand{\thesubsection}{(\alph{subsection})}
+
+% 式番号を章.式番 の形式にさせる
+%  \makeatletter
+%    \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+%    \@addtoreset{equation}{section}
+%  \makeatother
+
+% 表番号も
+%  \makeatletter
+%    \renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+%    \@addtoreset{table}{section}
+%  \makeatother
+
+% 図番号も
+%  \makeatletter
+%    \renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+%    \@addtoreset{figure}{section}
+%  \makeatother
+
+% ソースコード番号も
+%  \makeatletter      
+%       \AtBeginDocument{                       
+%           \renewcommand*{\thelstlisting}{\arabic{section}.\arabic{lstlisting}}          
+%           \@addtoreset{lstlisting}{section}                    
+%       }            
+%  \makeatother
+
+% 参考文献の番号を 1) にする
+% \makeatletter
+%   \def\@biblabel#1{#1)}
+% \makeatletter
+
+% 図の入れ方
+% \begin{figure}[H] % h...hereの意
+%   \centering
+%   \includegraphics[width=13cm]{kairo.png}
+%   \caption{キャプション名\label{ラベル名}}
+% \end{figure}
+
+% 回り込む図
+% \begin{wrapfigure}[13]{r}{5cm}
+%   \centering
+%   \includegraphics[width=5cm]{img/schematics.png}
+%   \vspace*{-\intextsep}
+%   \caption{システムの模式図\label{schematics}}
+% \end{wrapfigure}
+
+% 表の入れ方
+% \begin{table}[H]
+%   \centering
+%   \caption{キャプション名\label{ラベル名}}
+%   \begin{tabular}{c|c|c|c} \hline \hline
+%     抵抗名 &$\zeta$ &$\psi$ & $g :\ \mathrm{dB}$ \\\hline
+%     R1&$0.0500$ &$ 0.997 $ & $20.0$\\\hline
+%     R3 & $0.500$ &$0.707$ & $2.32$ \\\hline
+%   \end{tabular}
+% \end{table}
+
+% ソースコードの埋め込み方
+% \begin{lstlisting}[caption=name,label=number]
+% \end{lstlisting}
+
+% pdf 挿入の仕方
+% \includepdf[pages=-]{pdfs/reviews.pdf}
+% \includepdf[pages=3]{pdfs/FrontCovers.pdf}
+% \includepdf[pages=2-]{pdfs/report1.pdf}
+
+% prooftree
+% \begin{prooftree}
+%   \AxiomC{}
+%   \RightLabel{$\overrightarrow{\mathtt{var}}$}
+%   \UnaryInfC{$\tup{x, s}\to \tup{1, s}$}
+%   \RightLabel{$\overrightarrow{\mathtt{op1}}$}
+%   \UnaryInfC{$\tup{x\leq y, s}\to \tup{1\leq y, s}$}
+%   \RightLabel{$\overrightarrow{\mathtt{if1}}$}
+%   \UnaryInfC{$\tup{\hqrif x \leq y \hqthen C_1 \hqelse \nhqskip, s}\to \tup{\hqrif 1 \leq y \hqthen C_1 \hqelse \nhqskip, s}$}
+%   \RightLabel{$\overrightarrow{\mathtt{seq1}}$}
+%   \UnaryInfC{$\tup{(\hqrif x \leq y \hqthen C_1 \hqelse \nhqskip );(z \coloneqq 3; C_2), s}\to \tup{(\hqrif 1 \leq y \hqthen C_1 \hqelse \nhqskip );(z \coloneqq3; C_2), s}$}
+% \end{prooftree}
+
+\setcounter{tocdepth}{3}
+
+\title{ReDoS脆弱な正規表現の修正}
+\author{情報理工学科 寺内研究室所属 富家功一朗}
+\date{2023年1月31日}
