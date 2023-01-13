@@ -41,23 +41,44 @@ $\varepsilon$は空列を表す定数，$c$は任意の1文字(本論文ではAS
 
 
 \section{NFA}
-NFA(Nondeterministic Finite Automaton)は有限オートマトンの一種である状態から入力を受け取ったとき，次の状態への遷移が一意に決まらないことがあるものである．正規表現はそれと等価なNFAへと変換することが可能であるので，今後は正規表現のままではなくそれと等価なNFAを用いることにより議論を進める．
+NFA(Nondeterministic Finite Automaton)は有限オートマトンの一種で，ある状態から入力を受け取ったとき，次の状態への遷移が一意に決まらないことがあるものである．正規表現はそれと等価なNFAへと変換することが可能であるので，今後は正規表現のままではなくそれと等価なNFAを用いることにより議論を進める．
 
 % 後で書く
 \subsection{NFAの定義}
 先行研究で紹介されていたNFAの定義を以下に示す．
 \begin{dfn}[NFA]
-  NFA $\mathcal{A}$は5つの組$(Q,\Sigma,\Delta,q_0,F)$からなる．$Q$は状態の有限集合，$\Sigma$はアルファベットの有限集合，$\Delta :Q\times \Sigma \rightarrow 2^Q$は遷移関数である．$q_0 \in Q$を初期状態，$F \subseteq Q$を受理状態の集合とする．また，もし$q'\in \Delta (q,l)$なら$(q,l,q')$をラベルを経由した遷移と呼ぶこととする．
+  NFA $\mathcal{A}$は5つの組$(Q,\Sigma,\Delta,q_0,F)$からなる．$Q$は状態の有限集合，$\Sigma$はアルファベット(文字)の有限集合，$\Delta :Q\times \Sigma \rightarrow 2^Q$は遷移関数である．$q_0 \in Q$を初期状態，$F \subseteq Q$を受理状態の集合とする．また，もし$q'\in \Delta (q,l)$なら$(q,l,q')$をラベルを経由した遷移と呼ぶこととする．
 \end{dfn}
 
-このNFAの定義は一般的ではない．$\Sigma$に空列$\varepsilon$を加えた$\Sigma \cup {\varepsilon}$をラベルの集合とした5つ組$(Q,\Sigma \cup {\varepsilon},\Delta,q_0,F)$をNFAの定義とすることが多い．
+このNFAの定義は一般的ではない．$\Sigma$に空列$\varepsilon$を加えた$\Sigma \cup \qty{\varepsilon}$をアルファベット集合として5つ組$(Q,\Sigma \cup \qty{\varepsilon},\Delta,q_0,F)$をNFAの定義とすることが多い．
 
 NFAに文字列を入力したとき，初期状態$q_0$から始まって一つずつ文字を読み取って遷移していき，ちょうど受理状態に到達するとき，その文字列はNFAに受理されると言う．受理状態以外の状態で読み取りが終了した場合，その文字列はNFAに拒絶されると言う．NFAに受理される文字列全体の集合をNFAの受理する言語と言う．
 
+
+
 \subsection{NFAの例}
+NFA $\mathcal{A}_1$を$(\qty{q,q'},\qty{a,b},\Delta,q,\qty{q'})$とする．なお，遷移関数$\Delta$は以下のような状態遷移表で表されるものとする．表の縦軸が状態，横軸がアルファベットを表す．ある状態とあるアルファベットが交差するセルは，ある状態からあるアルファベットを読んで遷移する状態の集合を表している．例えば，状態$q$からアルファベット$a$を読んで遷移する状態の集合は$\qty{q,q'}$である．
 
+\begin{table}[H]
+  \centering
+  \caption{遷移関数$\Delta$\label{delta}}
+  \begin{tabular}{c|c|c} \hline \hline
+       & $a$  &$b$ \\\hline
+    $q$  & $\qty{q,q'}$ &$\qty{}$ \\\hline
+    $q'$ & $\qty{}$  &$\qty{q,q'}$ \\\hline
+  \end{tabular}
+\end{table}
 
+NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
+\begin{figure}[H] % h...hereの意
+  \centering
+  \includegraphics[width=0.5\linewidth]{../figures/nfa.jpg}
+  \caption{NFA $\mathcal{A}_1$\label{nfa_example}}
+\end{figure}
 
+このNFAが受理する言語は$\qty{a,aa,ab,aaa,aab,aba,abb,\ldots}$である．これは正規表現$a(a|b)^*$に対応する．
+
+% \subsection{DFA}
 
 \section{正規表現の脆弱性}
 文字列のパターンマッチングにかなり時間がかかってしまうような正規表現が存在することが知られている．そのような正規表現を脆弱な正規表現と呼ぶ．本節では正規表現の脆弱性について定式化を行う．
