@@ -48,11 +48,30 @@ NFA(Nondeterministic Finite Automaton)は有限オートマトンの一種で，
 % 後で書く
 \subsection{NFAの定義}
 先行研究で紹介されていたNFAの定義を以下に示す．
-\begin{dfn}[NFA]
+\begin{dfn}[($\varepsilon$遷移なし)NFA]
   NFA $\mathcal{A}$は5つの組$(Q,\Sigma,\Delta,q_0,F)$からなる．$Q$は状態の有限集合，$\Sigma$はアルファベット(文字)の有限集合，$\Delta :Q\times \Sigma \rightarrow 2^Q$は遷移関数である．$q_0 \in Q$を初期状態，$F \subseteq Q$を受理状態の集合とする．また，もし$q'\in \Delta (q,l)$なら$(q,l,q')$をラベルを経由した遷移と呼ぶこととする．
 \end{dfn}
 
-このNFAの定義は一般的ではない．$\Sigma$に空列$\varepsilon$を加えた$\Sigma \cup \qty{\varepsilon}$をアルファベット集合として5つ組$(Q,\Sigma \cup \qty{\varepsilon},\Delta,q_0,F)$をNFAの定義とすることが多い．
+また，関連してパスという用語の定義も行う．
+
+\begin{dfn}[($\varepsilon$遷移なしNFAにおける)パス]
+  NFA $\mathcal{A}=(Q,\Sigma,\Delta,q_0,F)$のパス$\pi$を遷移列，すなわち$(q_1,l_1,q_2),\ldots,(q_{m-1},l_{m-1},q_{m})$とする．ただし，$q_i \in Q$,$l_i \in \Sigma$,$q_{i+1} \in \Delta(q_i,l_i)$である．つまり，$\pi$は$q_i$から始まって$q_m$で終わるパスを表す．また，labels$(\pi)$はラベル列，$(l_1,\ldots ,l_{m-1})$を意味するものとする．
+\end{dfn}
+
+
+このNFAの定義は一般的ではない．$\Sigma$に空列$\varepsilon$を加えた$\Sigma \cup \qty{\varepsilon}$をアルファベット集合として5つ組$(Q,\Sigma \cup \qty{\varepsilon},\Delta,q_0,F)$をNFAの定義とすることが多い．すなわち，
+
+\begin{dfn}[NFA]
+  NFA $\mathcal{A}$は5つの組$(Q,\Sigma \cup \qty{\varepsilon},\Delta,q_0,F)$からなる．$Q$は状態の有限集合，$\Sigma$はアルファベット(文字)の有限集合，$\varepsilon$は空列，$\Delta :Q\times \Sigma \rightarrow 2^Q$は遷移関数である．$q_0 \in Q$を初期状態，$F \subseteq Q$を受理状態の集合とする．また，もし$q'\in \Delta (q,l)$なら$(q,l,q')$をラベルを経由した遷移と呼ぶこととする．
+\end{dfn}
+
+また，パスも以下のように書き換える．
+\begin{dfn}[パス]
+  NFA $\mathcal{A}=((Q,\Sigma \cup \qty{\varepsilon},\Delta,q_0,F))$のパス$\pi$を遷移列，すなわち$(q_1,l_1,q_2),\ldots,(q_{m-1},l_{m-1},q_{m})$とする．ただし，$q_i \in Q$,$l_i \in \Sigma \cup \qty{\varepsilon}$,$q_{i+1} \in \Delta(q_i,l_i)$である．つまり，$\pi$は$q_i$から始まって$q_m$で終わるパスを表す．また，labels$(\pi)$はラベル列，$(l_1,\ldots ,l_{m-1})$を意味するものとする．
+\end{dfn}
+
+
+今後はただNFAとだけ記載した場合，$\varepsilon$遷移ありのNFAを指す．
 
 NFAに文字列を入力したとき，初期状態$q_0$から始まって一つずつ文字を読み取って遷移していき，ちょうど受理状態に到達するとき，その文字列はNFAに受理されるという．受理状態以外の状態で読み取りが終了した場合，その文字列はNFAに拒絶されるという．NFAに受理される文字列全体の集合をNFAの受理する言語という．
 
@@ -88,7 +107,7 @@ NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
 \subsection{正規表現の等価性}
 ある2つの正規表現$\mc{A},\mc{B}$が存在し，それらの正規表現にマッチする文字列の集合(つまり正規言語)が等しいとき，すなわち$\mc{L(A)}=\mc{L(B)}$であるとき，$\mc{A},\mc{B}$は意味的に等価であるという．以下に例を挙げる．
 
-2つの正規表現が構文的に等しい場合，例えば$\mc{A}=x^*,\mc{B}=x^*$としたとき，$\mc{L(x^*)}=\qty{\varepsilon,x,xx,xxx,\ldots}$よりこれらは意味的にも等しい．
+2つの正規表現が構文的に等しい場合，例えば$\mc{A}=x^*,\mc{B}=x^*$としたとき，$\mc{L}(x^*)=\qty{\varepsilon,x,xx,xxx,\ldots}$よりこれらは意味的にも等しい．
 
 2つの正規表現が構文的に等しくなく，意味的に等しい場合について考える．例えば$\mc{A}=x^*,\mc{B}=x^*x^*$としたとき，これらは構文的に等しくないが，$\mc{L}(x^*)=\mc{L}(x^*x^*)=\qty{\varepsilon,x,xx,xxx,\ldots}$より意味的には等しい．
 
@@ -103,11 +122,11 @@ NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
 
 \begin{enumerate}
   \item 2つの正規表現$\mc{A},\mc{B}$をNFA化し，さらにDFA化し，それらを$\mc{A}_{DFA},\mc{B}_{DFA}$とする．
-  \item $\mc{A}_{DFA}$と$\mc{B}_{DFA}$の否定を取ったDFA($\overline{\mc{B}_{DFA}}$と表記する)との積を取り，これを$\mc{A}_{DFA}\cap\overline{\mc{B}_{DFA}}$と表記する．また，同様に$\overline{\mc{A}_{DFA}}\cap\mc{B}_{DFA}$も構成する．
+  \item $\mc{A}_{DFA}$と$\mc{B}_{DFA}$の否定を取ったDFA($\overline{\mc{B}_{DFA}}$と表記する)との積を取り，これを$\mc{A}_{DFA}\cap\overline{\mc{B}_{DFA}}$と表記する．また，同様に$\overline{\mc{A}_{DFA}}\cap\mc{B}_{DFA}$も構成する．なお，正規言語は積集合演算，補集合演算について閉じているので，これらもまたDFAである．
   \item $\mc{L}(\mc{A}_{DFA}\cap\overline{\mc{B}_{DFA}})=\varnothing$かつ$\mc{L}(\overline{\mc{A}_{DFA}}\cap\mc{B}_{DFA})=\varnothing$なら2つの正規表現$\mc{A},\mc{B}$は等価，そうでないなら等価ではない．
 \end{enumerate}
 
-ここで$DFA$の積，否定を取る工程が発生しているが，具体的な構成方法は\cite{sipser}を参照されたい．なお，正規言語は積集合演算，補集合演算について閉じている．
+ここでDFAの積，否定を取る工程が発生しているが，具体的な構成方法は\cite{sipser}を参照されたい．
 
 % ベン図描く？
 

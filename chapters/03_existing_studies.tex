@@ -6,13 +6,99 @@
 
 
 \section{ReDoS脆弱性}
-文字列のパターンマッチングにかなり時間がかかってしまうような正規表現が存在することが知られている．そのような正規表現をReDoS(regular expression denial-of-service)脆弱な正規表現と呼ぶ．本節ではまず文字列のパターンマッチングはどのようなアルゴリズムで行われているかを紹介し，その次に正規表現の脆弱性について定式化を行う．
+文字列のパターンマッチングにかなり時間がかかってしまうような正規表現が存在することが知られている．そのような正規表現をReDoS(regular expression denial-of-service)脆弱な正規表現と呼ぶ．本節ではまず文字列のパターンマッチングはどのようなアルゴリズムで行われているかを紹介し，その次に正規表現の脆弱性について定義する．
 
 \subsection{バックトラック探索}
-大抵のプログラミング言語が正規表現ライブラリを提供している．そのうち多くの正規表現ライブラリはバックトラック探索アルゴリズムを用いて文字列のパターンマッチングを行っている．バックトラック探索アルゴリズムがどのようなものなのかを\cite{javascript}の論文で紹介されていた例を用いて説明する．バックトラック探索アルゴリズムについての詳細は\cite{java}を参照されたい(プログラミング言語Javaにおけるバックトラック探索アルゴリズムを用いた文字列パターンマッチングについて詳細に述べられている)．
+大抵のプログラミング言語が正規表現ライブラリを提供している．そのうち多くの正規表現ライブラリはバックトラック探索アルゴリズムを用いて文字列のパターンマッチングを行っている．このアルゴリズムにおいてバックトラックとはどのようなものなのか，それを\cite{javascript}の論文で紹介されていた例を用いて説明する．バックトラック探索アルゴリズムの詳細は\cite{java}を参照されたい(プログラミング言語Javaにおける，バックトラック探索アルゴリズムを用いた文字列パターンマッチングについて述べられている)．
+
+$a^*a^*b$という正規表現について考える．この正規表現と等価なNFAは以下のように作成できる(\cite{javascript}より引用)．
+
+\begin{figure}[H] % h...hereの意
+  \centering
+  \includegraphics[width=0.8\linewidth]{../figures/a*a*b.png}
+  \caption{正規表現$a^*a^*b$と等価なNFA\label{ラベル名}}
+\end{figure}
+
+
+このNFAに$aaa$という文字列を入力として与える(なお，$aaa$は受理されない)．
+
+まず，初期状態$s$から遷移できるところまで進む．今回の例では初期状態$s$から$a$という文字を2つ消費した後の状態10までは遷移できる．これをパスとして表すと以下のようになる．
+\begin{equation}
+  (s,\varepsilon,3),(3,\varepsilon,4),(4,a,5),(5,\varepsilon,6),(6,\varepsilon,7),(7,\varepsilon,8),(8,a,9),(9,\varepsilon,10)\label{path1}
+\end{equation}
+他にも以下のようなパスが存在する．
+\begin{equation*}
+  (s,\varepsilon,3),(3,\varepsilon,4),(4,a,5),(5,\varepsilon,4),(4,a,5),(5,\varepsilon,6),(6,\varepsilon,7),(7,\varepsilon,10)
+\end{equation*}
+\begin{equation*}
+  (s,\varepsilon,3),(3,\varepsilon,6),(6,\varepsilon,7),(7,\varepsilon,8),(8,a,9),(9,\varepsilon,8),(8,a,9),(9,\varepsilon,10)
+\end{equation*}
+しかし，状態10から先へは文字$b$がなければ進めない．このような状況に陥った際，1手前に戻る，すなわちバックトラックが行われる．具体的に言えば，(\ref{path1})の探索パスで言えば状態10から進めないことが分かったので状態9に戻ってやり直すということである．状態9に戻って，残りの文字$a$を読み取った上で状態$a$にたどりつけるようなパスを探すが存在しないので，またバックトラックする．このように文字列のパターンマッチングではバックトラックを繰り返し行うことが多々ある．バックトラックの回数が文字列のパターンマッチングの実行時間に大きな影響を与える．
+
 
 \subsection{ReDoS脆弱性の定式化}
+ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}では，超脆弱なNFAと脆弱なNFAの2種類の定義が紹介されていた．なお，本節でのNFAは$\varepsilon$遷移なしNFAである．
 
+\subsubsection{超脆弱なNFA}
+まず，超脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
+
+\subsubsection{脆弱なNFA}
+次に，脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
+\begin{dfn}[脆弱なNFA]
+  NFA $\mathcal{A}=(Q,\Sigma,\Delta,q_0,F)$が脆弱であることは$\mathcal{A}$のパスを走査するようなバックトラック探索アルゴリズムMATCHが存在し，MATCHの最悪ケースの複雑さが入力文字列の長さに対して最低でも2次関数的になることと同値である．
+\end{dfn}
+
+\begin{thm}\label{thm1}
+  NFA $\mathcal{A}$が脆弱であることは以下の条件を満たすような2つのピボット状態$q\in Q$と3つのパス$\pi_1,\pi_2,\pi_3$(ただし，$\pi_1 \neq \pi_2$)が存在することと同値である．
+    \begin{enumerate}
+      \item $\pi_1$は$q$で始まり，$q$で終わる．
+      \item $\pi_2$は$q$で始まり，$q'$で終わる．
+      \item $\pi_3$は$q'$で始まり，$q'$で終わる．
+      \item labels($\pi_1$)=label($\pi_2$)=label($\pi_3$)．
+      \item $q_0$から$q$へのパス$\pi_p$が存在する.
+      \item $q'$から状態$q_r \notin F$へのパス$\pi_s$が存在する．
+    \end{enumerate}
+\end{thm}
+証明については\cite{vul_detect}を参照されたい．
+
+上記の定理を直感的に表した図を以下に示す(\cite{vul_detect}より引用)．
+\begin{figure}[H] % h...hereの意
+  \centering
+  \includegraphics[width=\linewidth]{../figures/vul.jpg}
+  \caption{脆弱なNFAの一般的なパターン\label{vul_nfa}}
+\end{figure}
+
+定理\ref{thm1}の性質を満たすNFAが超線形的な動作を引き起こす理由を考える．
+
+$s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻撃文字列のプレフィックスlabels($\pi_p$)，$s_1$が攻撃文字列のサフィックスlabels($\pi_s$)，$s$が攻撃文字列のコアlabels($\pi_1$)である．そして，$s_0\cdot s^k\cdot s_1$が拒絶される実行パスが存在する($\pi_p \cdot \pi_1^k \cdot \pi_s$など)．$T_q(k)$は$q$から走査を開始し，文字列$s^k\cdot s_1$を拒絶するまでの実行時間(文字列$s$を読むのに1単位の時間がかかるとする)を表すものとすると，以下のような漸化式が作れる．
+
+\begin{align}
+  T_q(k)=(1+T_q(k-1))+(1+T_{q'}(k-1))\label{tq}
+\end{align}
+
+式(\ref{tq})の右辺を詳しくみると，文字列$s$は以下の2パターンの方法で処理されることが分かる．
+\begin{enumerate}
+  \item パス$\pi_1$を通って$q$に戻る場合，$s$が1単位分処理される．現状$q$にいるため，$T_q(k-1)$単位分の処理が残る．
+  \item パス$\pi_2$を通って$q'$へ行く場合，$s$が1単位分処理される．現状$q'$にいるため，$T_{q'}(k-1)$単位分の処理が残る．
+\end{enumerate}
+
+ここで，$T_{q'}(k)$の下界は$k$である．なぜなら，パス$\pi_3^k \pi_s$は明らかに拒絶状態$q_r$に到達できるからである．このことから，
+\begin{align*}
+  T_q(k)\geq T_q(k-1)+k+1
+\end{align*}
+従って，NFA $\mathcal{A}$において文字列$s_0\cdot s^k\cdot s_1$のパターンマッチングには最低でも$k^2$オーダーの時間がかかる．
+
+脆弱なNFAの例を以下に示す(\cite{vul_detect}より引用)．
+\begin{figure}[H] % h...hereの意
+  \centering
+  \includegraphics[width=0.75\linewidth]{../figures/vul_ex.jpg}
+  \caption{脆弱なNFAの例\label{vul_ex}}
+\end{figure}
+
+$\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$(q,a,q_2),(q_2,b,q)$に該当する．
+
+
+% コピペ
 
 
 
@@ -20,7 +106,8 @@
 
 \subsection{REMEDY}
 
-
+% REMEDYがどういうものか
+% S1Uとか
 
 
 
