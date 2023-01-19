@@ -95,16 +95,29 @@ $s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻�
   \caption{脆弱なNFAの例\label{vul_ex}}
 \end{figure}
 
-$\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$(q,a,q_2),(q_2,b,q)$に該当する．
+$\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$(q,a,q_2),(q_2,b,q)$とすると，定理\ref{thm1}より図\ref{vul_ex}は脆弱である．
 
 
 % コピペ
+% 直感的に
+
+
+\section{REMEDY}
+プログラマーがReDoS脆弱な正規表現を発見したとして，その正規表現をどのように扱いたいだろうか．その正規表現を非脆弱化したいと考える人が多いのではないだろうか．そこで，本章では脆弱な正規表現を非脆弱なものへと変換するツールREMEDY\cite{remedy}を紹介する．
+
+REMEDYは例を用いて正規表現を修正するprogramming-by-example(PBE)という手法を用いていて，正規表現の修正手法として多くの研究で注目されている．修正したい正規表現とその正規表現に受理されてほしい文字列例(positive example，正例)と受理されてほしくない文字列例(negative example，負例)を用いて正規表現を合成するというのがPBEを用いた正規表現修正のアプローチである．REMEDYは入力として正規表現，positive example，negative exampleを受けとり，出力として以下の性質を満たすような正規表現を返す．
+\begin{enumerate}
+  \item 入力として与えられたpositive example，negative exampleが正しく分類されている(positive exampleは受理され，negative exampleは受理されない)
+  \item real-world strong 1-unambuiguity(RWS1U)
+  \item 入力として与えられた正規表現に構文的に近い
+\end{enumerate}
+real-world strong 1-unambuiguity(RWS1U)を満たせば正規表現が非脆弱であることが保証される(今回扱う正規表現は純粋なものなのでS1Uを満たすだけでも非脆弱であることが保証される)．入力として与えられた正規表現に構文的に近いというのは入力の正規表現$r$と出力の正規表現$r'$の編集距離が最小になるということである．詳細に言うと，正規表現を構文木としてみなしたとき，編集前の部分木の節点の個数と編集後の部分木の節点の個数の和が最小になるということである．
+
+% abstract,intro抜粋
 
 
 
-\section{ReDoS脆弱な正規表現の修正}
 
-\subsection{REMEDY}
 
 % REMEDYがどういうものか
 % S1Uとか
