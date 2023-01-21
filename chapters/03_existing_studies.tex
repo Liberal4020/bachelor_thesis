@@ -102,7 +102,7 @@ $\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$
 % 直感的に
 
 
-\section{REMEDY}
+\section{REMEDY}\label{sec_remedy}
 プログラマーがReDoS脆弱な正規表現を発見したとして，その正規表現をどのように扱いたいだろうか．その正規表現を非脆弱化したいと考える人が多いのではないだろうか．そこで，本章では脆弱な正規表現を非脆弱なものへと変換するツールREMEDY\cite{remedy}を紹介する．
 
 REMEDYは例を用いて正規表現を修正するprogramming-by-example(PBE)という手法を用いていて，正規表現の修正手法として多くの研究で注目されている．修正したい正規表現とその正規表現に受理されてほしい文字列例(positive example，正例)と受理されてほしくない文字列例(negative example，負例)を用いて正規表現を合成するというのがPBEを用いた正規表現修正のアプローチである．REMEDYは入力として正規表現，positive example，negative exampleを受けとり，出力として以下の性質を満たすような正規表現を返す．
