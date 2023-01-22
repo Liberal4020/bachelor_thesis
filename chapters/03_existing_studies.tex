@@ -37,10 +37,7 @@ $a^*a^*b$という正規表現について考える．この正規表現と等�
 
 
 \subsection{ReDoS脆弱性の定式化}
-ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}では，超脆弱なNFAと脆弱なNFAの2種類の定義が紹介されていた．なお，本節でのNFAは$\varepsilon$遷移なしNFAである．
-
-\subsubsection{超脆弱なNFA}
-まず，超脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
+ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}では，超脆弱なNFAと脆弱なNFAの2種類の定義が紹介されていた．本稿では脆弱なNFAについてのみ言及する．なお，本節でのNFAは$\varepsilon$遷移なしNFAである．
 
 \subsubsection{脆弱なNFA}
 次に，脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
@@ -88,6 +85,7 @@ $s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻�
 \end{align*}
 従って，NFA $\mathcal{A}$において文字列$s_0\cdot s^k\cdot s_1$のパターンマッチングには最低でも$k^2$オーダーの時間がかかる．
 
+\subsubsection{脆弱なNFAの例}
 脆弱なNFAの例を以下に示す(\cite{vul_detect}より引用)．
 \begin{figure}[H] % h...hereの意
   \centering
