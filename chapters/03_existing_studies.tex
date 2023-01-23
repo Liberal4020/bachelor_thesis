@@ -85,7 +85,7 @@ $s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻�
 \end{align*}
 従って，NFA $\mathcal{A}$において文字列$s_0\cdot s^k\cdot s_1$のパターンマッチングには最低でも$k^2$オーダーの時間がかかる．
 
-\subsubsection{脆弱なNFAの例}
+\subsubsection{脆弱なNFAの例}\label{ex}
 脆弱なNFAの例を以下に示す(\cite{vul_detect}より引用)．
 \begin{figure}[H] % h...hereの意
   \centering
@@ -93,7 +93,7 @@ $s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻�
   \caption{脆弱なNFAの例\label{vul_ex}}
 \end{figure}
 
-$\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$(q,a,q_2),(q_2,b,q)$とすると，定理\ref{thm1}より図\ref{vul_ex}は脆弱である．
+$\pi_1$が$(q,a,q_1),(q_1,b,q)$，$\pi_2$が$(q,a,q_2),(q_2,b,q')$，$\pi_3$が$(q,a,q_2),(q_2,b,q)$とすると，定理\ref{thm1}より図\ref{vul_ex}のNFAは脆弱である．
 
 
 % コピペ
