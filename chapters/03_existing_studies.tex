@@ -15,7 +15,7 @@ $a^*a^*b$という正規表現について考える．この正規表現と等�
 
 \begin{figure}[H] % h...hereの意
   \centering
-  \includegraphics[width=0.8\linewidth]{../figures/a*a*b.png}
+  \includegraphics[width=0.8\linewidth]{/home/thelema/KoichiroTomiie_thesis_2022/figures/a*a*b.png}
   \caption{正規表現$a^*a^*b$と等価なNFA\label{ラベル名}}
 \end{figure}
 
@@ -37,10 +37,10 @@ $a^*a^*b$という正規表現について考える．この正規表現と等�
 
 
 \subsection{ReDoS脆弱性の定式化}
-ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}では，超脆弱なNFAと脆弱なNFAの2種類の定義が紹介されていた．本稿では脆弱なNFAについてのみ言及する．なお，本節でのNFAは$\varepsilon$遷移なしNFAである．
+ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}では，超脆弱なNFAと脆弱なNFAの2種類の定義が紹介されていた．本稿では脆弱なNFAについてのみ言及する．なお，本小節でのNFAは$\varepsilon$遷移なしNFAである．
 
 \subsubsection{脆弱なNFA}
-次に，脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
+脆弱な($\varepsilon$遷移なし)NFAについて定式化する．
 \begin{dfn}[脆弱なNFA]
   NFA $\mathcal{A}=(Q,\Sigma,\Delta,q_0,F)$が脆弱であることは$\mathcal{A}$のパスを走査するようなバックトラック探索アルゴリズムMATCHが存在し，MATCHの最悪ケースの複雑さが入力文字列の長さに対して最低でも2次関数的になることと同値である．
 \end{dfn}
@@ -61,7 +61,7 @@ ReDoS脆弱性の定式化を行う．W\"{u}stholzらの研究\cite{vul_detect}�
 上記の定理を直感的に表した図を以下に示す(\cite{vul_detect}より引用)．
 \begin{figure}[H] % h...hereの意
   \centering
-  \includegraphics[width=\linewidth]{../figures/vul.jpg}
+  \includegraphics[width=\linewidth]{/home/thelema/KoichiroTomiie_thesis_2022/figures/vul.jpg}
   \caption{脆弱なNFAの一般的なパターン\label{vul_nfa}}
 \end{figure}
 
@@ -89,7 +89,7 @@ $s_0\cdot s^k\cdot s_1$という形の攻撃文字列を考える．$s_0$が攻�
 脆弱なNFAの例を以下に示す(\cite{vul_detect}より引用)．
 \begin{figure}[H] % h...hereの意
   \centering
-  \includegraphics[width=0.75\linewidth]{../figures/vul_ex.jpg}
+  \includegraphics[width=0.75\linewidth]{/home/thelema/KoichiroTomiie_thesis_2022/figures/vul_ex.jpg}
   \caption{脆弱なNFAの例\label{vul_ex}}
 \end{figure}
 
@@ -111,23 +111,10 @@ REMEDYは例を用いて正規表現を修正するprogramming-by-example(PBE)�
 \end{enumerate}
 real-world strong 1-unambuiguity(RWS1U)を満たせば正規表現が非脆弱であることが保証される(今回扱う正規表現は純粋なものなのでS1Uを満たすだけでも非脆弱であることが保証される)．入力として与えられた正規表現に構文的に近いというのは入力の正規表現$r$と出力の正規表現$r'$の編集距離が最小になるということである．詳細に言うと，正規表現を構文木としてみなしたとき，編集前の部分木の節点の個数と編集後の部分木の節点の個数の和が最小になるということである．
 
-% abstract,intro抜粋
 
 
-
-
-
-% REMEDYがどういうものか
-% S1Uとか
-
-
-
-
-
-
-
-\bibliography{main}
-\bibliographystyle{junsrt}
+% \bibliography{main}
+% \bibliographystyle{junsrt}
 
 
 \end{document}

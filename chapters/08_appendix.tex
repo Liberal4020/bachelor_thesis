@@ -1,0 +1,80 @@
+\documentclass[a4paper, 12pt, dvipdfmx, uplatex]{jsreport}
+\input{../preamble.tex}
+
+\begin{document}
+\chapter{実行結果の詳細}
+実行結果の詳細について示す．
+
+\section{実行ログ}
+「remedy」の右隣に書かれている数値は1回あたりのREMEDYの実行時間(秒)，「regeq」の右隣に書かれている数値は1回あたりのRegEqの実行時間(秒)を表す．\ref{caution}節でも述べたが，REMEDYとRegEqで扱える正規表現には差異があり，それを埋めるためのプログラムが「pure」である．「pure」の右隣に書かれている数値は1回あたりの「pure」の実行時間(秒)である．
+
+最終行から2行目には非脆弱化した正規表現，最終行には修正するのにかかったトータルの時間を示している．
+
+\begin{lstlisting}[caption=$c(ab)^*a(ba)^*$を入力したときの実行ログ,label=number]
+remedy 0.4174873169977218
+pure 0.0027732611633837223
+regeq 0.11208686418831348
+ca(?:(ba)*)
+0.5333753989543766
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=$.^*a^*\mathrm{=}$を入力したときの実行ログ,label=number]
+remedy 0.3885219458024949
+pure 0.004464931786060333
+regeq 1.419098210055381
+remedy 0.38785919081419706
+pure 0.0045299839694052935
+regeq 1.3890138799324632
+remedy 0.3998173091094941
+pure 0.004595744889229536
+regeq 4.988238276913762
+remedy 0.4057066470850259
+pure 0.004617673112079501
+regeq 2.94695325801149
+remedy 0.3773885320406407
+pure 0.0044965429697185755
+regeq 5.4774684340227395
+remedy 0.4433436091057956
+pure 0.004422834841534495
+regeq 3.137833727989346
+remedy 0.623568732989952
+pure 0.004489025101065636
+regeq 2.9904427719302475
+remedy 0.6126141811255366
+pure 0.004606247181072831
+regeq 4.881942786974832
+remedy 0.6278217800427228
+pure 0.004618596052750945
+regeq 10.262604668969288
+remedy 2.1400269609875977
+pure 0.004332051845267415
+regeq 11.046329517150298
+(?:([^=])*)[=](?:((?:([^=])*)[=])*)
+54.99987591896206
+\end{lstlisting}
+
+\section{REMEDYに追加されたpositive exampleおよびnegative example}
+$.^*a^*\mathrm{=}$を修正する際にREMEDYに追加されたpositive exampleおよびnegative exampleについて以下に示す．一番上の行が修正したい正規表現，その下から「$\mathtt{+++}$」までがpositive example，さらにその下から「$\mathtt{---}$」までがnegative exampleである．
+
+\begin{lstlisting}[caption=$.^*a^*\mathrm{=}$を修正する際にREMEDYに追加されたpositive exampleおよびnegative example,label=number]
+.*a*=
+-=
+0=
+==
+=
+--=
+0-=
+=-=
+=0=
++++
+
+-
+0
+=-
+---
+
+\end{lstlisting}
+
+
+\end{document}

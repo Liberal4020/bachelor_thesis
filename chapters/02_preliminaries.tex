@@ -29,21 +29,21 @@ $\varepsilon$は空列を表す定数，$c$は任意の1文字(本論文ではAS
 また，本論文では先の正規表現で表現可能ないくつかの拡張機能を搭載している．以下にどのような拡張を搭載したか述べる．
 \begin{itemize}
   \item $.$ \quad 任意の1文字にマッチすることを表す．
-  \item $[a_ia_{i+1}\ldots a_j]$ \quad $a_i,a_{i+1}\ldots a_j$のうちのどれか1文字にマッチすることを表す．特に，$[a_i$-$a_j]$は文字コード上で$i$から$j$番目にある文字のうちどれか1文字にマッチすることを表す．
-  \item $[$^$a_ia_{i+1}\ldots a_j]$ \quad $a_i,a_{i+1}\ldots a_j$以外のどれか1文字にマッチすることを表す．
+  \item $[a_ia_{i+1}\ldots a_j]$ \quad $a_i,a_{i+1},\ldots ,a_j$のうちのどれか1文字にマッチすることを表す．特に，$[a_i$-$a_j]$は文字コード上で$i$から$j$番目にある文字のうちどれか1文字にマッチすることを表す．
+  \item $[$^$a_ia_{i+1}\ldots a_j]$ \quad $a_i,a_{i+1},\ldots ,a_j$以外のどれか1文字にマッチすることを表す．
   \item $r?$ \quad 正規表現$r$に属する文字列が0回または1回出現することを表す．
 \end{itemize}
 
 
 
 \subsection{正規表現を用いた文字列のパターンマッチング例}
-正規表現を用いた文字列のパターンマッチング例を見る．$a\mid b$という正規表現には$a,b$といった文字列がマッチする．$ab$という正規表現には$ab$といった文字列がマッチする．$\varepsilon,a,aa,aaa\ldots$といった文字列がマッチする．$a^*$という正規表現には$\varepsilon,a,aa,aaa,\ldots$といった文字列がマッチする．最後に，$(a|bc)^*$という正規表現には$\varepsilon,a,bc,aa,abc,bca,bcbc,\ldots$といった文字列がマッチする．
+正規表現を用いた文字列のパターンマッチング例を見る．$a\mid b$という正規表現には$a,b$といった文字列がマッチする．$ab$という正規表現には$ab$といった文字列がマッチする．$a^*$という正規表現には$\varepsilon,a,aa,aaa,\ldots$といった文字列がマッチする．最後に，$(a|bc)^*$という正規表現には$\varepsilon,a,bc,aa,abc,bca,bcbc,\ldots$といった文字列がマッチする．
 
 また，本論文で扱うような正規表現においてパターンマッチングに成功した(正規表現に受理されるとも言う)文字列集合を正規言語と呼ぶ．そして，ある正規表現$\mathcal{A}$に受理される言語のことを$\mathcal{L(A)}$と書くことにする．
 
 
 \section{NFA}
-NFA(Nondeterministic Finite Automaton)は有限オートマトンの一種で，ある状態から入力を受け取ったとき，次の状態への遷移が一意に決まらないことがあるものである．正規表現はそれと等価なNFAへと変換することが可能であるので，今後は正規表現のままではなくそれと等価なNFAを用いることにより議論を進める．
+NFA(Nondeterministic Finite Automaton)は有限オートマトンの一種で，ある状態から入力を受け取ったとき，次の状態への遷移が一意に決まらないことがあるものである．正規表現はそれと等価なNFAへと変換することが可能であるので，今後は正規表現のままではなくそれと等価なNFAを用いることにより議論を進めることがある．
 
 % 後で書く
 \subsection{NFAの定義}
@@ -78,7 +78,7 @@ NFAに文字列を入力したとき，初期状態$q_0$から始まって一つ
 
 
 \subsection{$\varepsilon$遷移なしNFAの例}
-($\epsilon$遷移なし)NFA $\mathcal{A}_1$を$(\qty{q,q'},\qty{a,b},\Delta,q,\qty{q'})$とする．なお，遷移関数$\Delta$は以下のような状態遷移表で表されるものとする．表の縦軸が状態，横軸がアルファベットを表す．ある状態とあるアルファベットが交差するセルは，ある状態からあるアルファベットを読んで遷移する状態の集合を表している．例えば，状態$q$からアルファベット$a$を読んで遷移する状態の集合は$\qty{q,q'}$である．
+($\varepsilon$遷移なし)NFA $\mathcal{A}_1$を$(\qty{q,q'},\qty{a,b},\Delta,q,\qty{q'})$とする．なお，遷移関数$\Delta$は以下のような状態遷移表で表されるものとする．表の縦軸が状態，横軸がアルファベットを表す．ある状態とあるアルファベットが交差するセルは，ある状態からあるアルファベットを読んで遷移する状態の集合を表している．例えば，状態$q$からアルファベット$a$を読んで遷移する状態の集合は$\qty{q,q'}$である．
 
 \begin{table}[H]
   \centering
@@ -93,7 +93,7 @@ NFAに文字列を入力したとき，初期状態$q_0$から始まって一つ
 NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
 \begin{figure}[H] % h...hereの意
   \centering
-  \includegraphics[width=0.5\linewidth]{../figures/nfa.jpg}
+  \includegraphics[width=0.5\linewidth]{/home/thelema/KoichiroTomiie_thesis_2022/figures/nfa.jpg}
   \caption{NFA $\mathcal{A}_1$\label{nfa_example}}
 \end{figure}
 
@@ -116,7 +116,7 @@ NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
 
 例えば，有名なアルゴリズムとして次のようなものがある．まず2つの正規表現をNFA化する．次に2つのNFAをDFA(Deterministic Finite Automaton，ある状態からの遷移先が一意に定まった有限オートマトン)化する．さらに2つのDFAを最小化(不要な状態の削減)する．最小化した際に得られるDFAは一意に定まることが知られている．この事実を利用し，2つの最小DFAが一致するかどうかを確認することで等価性判定を行うことができる．上記のようなアルゴリズムは\cite{hopcroft}で紹介されている．
 
-また，他にも正規表現の微分(\cite{regex_de1},\cite{regex_de2})を利用した等価性判定アルゴリズム(\cite{regex_eq_de})もある．
+また，他にも正規表現の微分(\cite{regex_de1},\cite{regex_de2})を利用した等価性判定アルゴリズム\cite{regex_eq_de}がある．
 
 しかし，本研究では先の2つのアルゴリズムではなく，次のようなアルゴリズムを用いることにする(このアルゴリズムも有名で\cite{sipser}で紹介されている)．
 
@@ -126,25 +126,14 @@ NFA $\mathcal{A}_1$をグラフにすると以下のようになる．
   \item $\mc{L}(\mc{A}_{DFA}\cap\overline{\mc{B}_{DFA}})=\varnothing$かつ$\mc{L}(\overline{\mc{A}_{DFA}}\cap\mc{B}_{DFA})=\varnothing$なら2つの正規表現$\mc{A},\mc{B}$は等価，そうでないなら等価ではない．
 \end{enumerate}
 
-ここでDFAの積，否定を取る工程が発生しているが，具体的な構成方法は\cite{sipser}を参照されたい．
+ここでDFAの積，否定を取る工程が発生しているが，具体的な構成方法は\cite{sipser}を参照されたい．また，正規言語の空性判定についても\cite{sipser}を参照されたい．
 
 このアルゴリズムのメリットとして2つの正規表現が等価でないことを示す反例を探しやすいということが挙げられる．後に提案する手法ではこの反例を利用する．
 
 
-% ベン図描く？
 
-% fbox
-
-
-
-
-
-
-
-
-
-\bibliography{main}
-\bibliographystyle{junsrt}
+% \bibliography{main}
+% \bibliographystyle{junsrt}
 
 
 \end{document}

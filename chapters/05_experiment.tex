@@ -5,13 +5,13 @@
 \chapter{実験}
 本章では4章で提案した手法を実装し，実際に脆弱な正規表現が非脆弱な正規表現へと修正されていることを確認する．
 
-\section{実装における諸注意および実行環境}
-基本的には4章で提案した手法をプログラムにしただけである．しかし，RegEqではcharacter set $[a_ia_{i+1}\ldots a_j]$を直接扱うことができないため，これをunionでつないだ形で表現している．具体的に言えば，$a_i|a_{i+1}|\ldots|a_j$としている．any $.$に関しても同様である．
+\section{実装における諸注意および実行環境}\label{caution}
+基本的には4章で提案した手法をプログラムにしただけである．しかし，RegEqではcharacter set $[a_ia_{i+1}\ldots a_j]$を直接扱うことができないため，これを選択$|$でつないだ形で表現している．具体的に言えば，$a_i|a_{i+1}|\ldots|a_j$としている．any $.$に関しても同様である．
 
 また，実験には計算機として「Xeon Gold6254(3.1GHz)x 2CPU (36コア), 96GB RAM」を使用した．
 
 \section{結果}
-3章で紹介した，図\ref{vul_ex}のNFAに対応する正規表現$c(ab)^*a(ba)^*$を例に取って実験を行う．当然この正規表現は脆弱である．本研究で実装したプログラムに正規表現$c(ab)^*a(ba)^*$，$\mathrm{positive \ example}=\varnothing$，$\mathrm{negative \ example}=\varnothing$を入力すると，以下のような正規表現が出力として返ってきた(実行結果のログは付録を参照されたい)．
+3章で紹介した，図\ref{vul_ex}のNFAに対応する正規表現$c(ab)^*a(ba)^*$を例に取って実験を行う．当然この正規表現は脆弱である．本研究で実装したプログラムに正規表現$c(ab)^*a(ba)^*$，$\mathrm{positive \ example}=\varnothing$，$\mathrm{negative \ example}=\varnothing$を入力すると，以下のような正規表現が出力として返ってきた(実行結果の詳細は付録を参照されたい)．
 \begin{lstlisting}[caption=$c(ab)^*a(ba)^*$を非脆弱化した正規表現,label=number]
 ca(?:(ba)*)
 \end{lstlisting}
@@ -28,7 +28,7 @@ ca(?:(ba)*)
   \end{tabular}
 \end{table}
 
-しかし，この例はREMEDYによる初回の修正後の正規表現が偶然修正前の正規表現と意味的に等価であったため，1ループ目で終了してしまった(REMEDYを実行，その後RegEqを実行という工程を1ループとする)．数ループした果てに目的の正規表現が得られる例を見る．そこで$.^*a^*\mathrm{=}$という正規表現を考える．$.^*a^*\mathrm{=}$を入力として本研究で実装したプログラムを走らせると10ループ目にして以下のような結果が得られた(実行結果のログは付録を参照されたい)．
+しかし，この例はREMEDYによる初回の修正後の正規表現が偶然修正前の正規表現と意味的に等価であったため，1ループ目で終了してしまった(REMEDYを実行，その後RegEqを実行という工程を1ループとする)．数ループした果てに目的の正規表現が得られる例を見る．そこで$.^*a^*\mathrm{=}$という正規表現を考える．$.^*a^*\mathrm{=}$を入力として本研究で実装したプログラムを走らせると10ループ目にして以下のような結果が得られた(実行結果の詳細は付録を参照されたい)．
 
 \begin{lstlisting}[caption=$.^*a^*\mathrm{=}$を非脆弱化した正規表現,label=number]
 (?:([^=])*)[=](?:((?:([^=])*)[=])*)
@@ -38,7 +38,7 @@ ca(?:(ba)*)
 
 \begin{table}[H]
   \centering
-  \caption{脆弱な正規表現$[$^$\mathrm{=}]^*\mathrm{=}([$^$\mathrm{=}]^*\mathrm{=})^*$の修正結果\label{vul_res2}}
+  \caption{脆弱な正規表現$.^*a^*\mathrm{=}$の修正結果\label{vul_res2}}
   \begin{tabular}{c|c|c} \hline \hline
       修正前の正規表現 & 修正後の正規表現  & 修正にかかった時間[s]\\\hline
       $.^*a^*\mathrm{=}$  & $[$^$\mathrm{=}]^*\mathrm{=}([$^$\mathrm{=}]^*\mathrm{=})^*$ &$55.000$ \\\hline
@@ -87,6 +87,6 @@ ca(?:(ba)*)
 
 
 
-\bibliography{main}
-\bibliographystyle{junsrt}
+% \bibliography{main}
+% \bibliographystyle{junsrt}
 \end{document}

@@ -18,7 +18,7 @@
 
 % 後で参照するかも
 
-RegEqは2つの正規表現が与えられたとき，それらが意味的に等価であるか否かを判定するプログラムである．また，等価でない場合，片方の正規表現には受理されるがもう片方の正規表現には受理されない反例を返す．RegEqの等価性判定のアルゴリズムは2章で説明を行った\cite{hopcroft}ものと同じである．
+RegEqは2つの正規表現が与えられたとき，それらが意味的に等価であるか否かを判定するプログラムである．また，等価でない場合，片方の正規表現には受理されるがもう片方の正規表現には受理されない反例を返す．RegEqの等価性判定のアルゴリズムは2章で説明を行った\cite{hopcroft}のものと同じである．
 
 \subsection{アルゴリズム}
 REMEDYとRegEqの2つのプログラムを用いて以下のようなアルゴリズムで正規表現を非脆弱化する．
@@ -36,7 +36,7 @@ REMEDYとRegEqの2つのプログラムを用いて以下のようなアルゴ�
 
 \begin{figure}[H] % h...hereの意
   \centering
-  \includegraphics[width=\linewidth]{../figures/algorithm.jpg}
+  \includegraphics[width=\linewidth]{/home/thelema/KoichiroTomiie_thesis_2022/figures/algorithm.jpg}
   \caption{ReDoS脆弱な正規表現の修正アルゴリズム\label{repair}}
 \end{figure}
 
@@ -44,13 +44,6 @@ REMEDYとRegEqの2つのプログラムを用いて以下のようなアルゴ�
 このアルゴリズムは停止しない場合がある．それはある正規表現に対してそれと意味的に等価でS1Uを満たすようなものが存在しない可能性があるからである．
 
 
-% 反例が探しやすい．
-
-
-
-
-\bibliography{main}
-\bibliographystyle{junsrt}
-
-
+% \bibliography{main}
+% \bibliographystyle{junsrt}
 \end{document}
